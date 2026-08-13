@@ -176,7 +176,6 @@
                     style="width:36px;height:36px;object-fit:cover;flex-shrink:0;"
                     alt="{{ auth()->user()->name }}"
                     onerror="this.src='https://ui-avatars.com/api/?name={{ urlencode(auth()->user()->name) }}&background=2563eb&color=fff&size=100&bold=true'">
-                <div>
                 <div style="color:#fff;font-weight:600;font-size:0.875rem;line-height:1.2">
                     {{ setting('school_name', 'School MS') }}
                 </div>
@@ -185,8 +184,6 @@
                 </div>
             </div>
         </div>
-    </div>
-    <div>
         <nav class="sidebar-nav">
             <a href="{{ route('dashboard.index') }}" class="{{ request()->routeIs('dashboard.index') ? 'active' : '' }}">
                 <i class="fas fa-home"></i> Dashboard
@@ -328,8 +325,8 @@
                                     Mark all read
                                 </button>
                                 <a href="{{ route('dashboard.notifications.index') }}" 
-                                class="btn btn-sm" 
-                                style="color:#60a5fa;font-size:0.75rem;padding:2px 8px">
+                                    class="btn btn-sm" 
+                                    style="color:#60a5fa;font-size:0.75rem;padding:2px 8px">
                                     View all
                                 </a>
                             </div>
@@ -344,7 +341,7 @@
                         {{-- Footer --}}
                         <div class="text-center py-2" style="border-top:1px solid #e2e8f0;background:#f8fafc">
                             <a href="{{ route('dashboard.notifications.index') }}" 
-                            style="font-size:0.8rem;color:#2563eb;text-decoration:none">
+                                style="font-size:0.8rem;color:#2563eb;text-decoration:none">
                                 View All Notifications
                             </a>
                         </div>

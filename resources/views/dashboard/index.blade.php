@@ -1,120 +1,123 @@
-@extends('layouts.dashboard')
-@section('title', 'Dashboard')
+    @extends('layouts.dashboard')
+    @section('title', 'Dashboard')
 
-@section('content')
-    <div class="d-flex justify-content-between align-items-center mb-4">
-        <div>
-            <h4 class="mb-1 fw-bold" style="color:#1e293b">
-                Good {{ now()->hour < 12 ? 'Morning' : (now()->hour < 17 ? 'Afternoon' : 'Evening') }},
-                {{ auth()->user()->name }}
-            </h4>
-            <p class="text-muted mb-0" style="font-size:0.875rem">{{ now()->format('l, d F Y') }}</p>
+    @section('content')
+        <div class="d-flex justify-content-between align-items-center mb-4">
+            <div>
+                <h4 class="mb-1 fw-bold" style="color:#1e293b">
+                    Good {{ now()->hour < 12 ? 'Morning' : (now()->hour < 17 ? 'Afternoon' : 'Evening') }},
+                    {{ auth()->user()->name }}
+                </h4>
+                <p class="text-muted mb-0" style="font-size:0.875rem">{{ now()->format('l, d F Y') }}</p>
+            </div>
+            <div class="d-flex gap-2">
+                <a href="{{ route('dashboard.students.create') }}" class="btn btn-primary btn-sm">
+                    <i class="fas fa-plus me-1"></i>Add Student
+                </a>
+                <a href="{{ route('dashboard.attendance.mark') }}" class="btn btn-success btn-sm">
+                    <i class="fas fa-clipboard-check me-1"></i>Mark Attendance
+                </a>
+            </div>
         </div>
-        <div class="d-flex gap-2">
-            <a href="{{ route('dashboard.students.create') }}" class="btn btn-primary btn-sm">
-                <i class="fas fa-plus me-1"></i>Add Student
-            </a>
-            <a href="{{ route('dashboard.attendance.mark') }}" class="btn btn-success btn-sm">
-                <i class="fas fa-clipboard-check me-1"></i>Mark Attendance
-            </a>
-        </div>
-    </div>
-    {{-- Row 1: Main Stats --}}
-    <div class="row g-3 mb-4">
-        <div class="col-xl-3 col-md-6">
-            <a href="{{ route('dashboard.students.index') }}" style="text-decoration:none">
-                <div class="stat-card" style="border-left: 4px solid #2563eb;cursor:pointer">
-                    <div class="d-flex justify-content-between align-items-start">
-                        <div>
-                            <div class="stat-number text-primary">{{ number_format($stats['total_students']) }}</div>
-                            <div class="stat-label">Total Students</div>
-                            <small class="text-success mt-1 d-block">
-                                <i class="fas fa-arrow-up"></i> Active Enrollment
-                            </small>
+
+        {{-- Row 1: Main Stats --}}
+        <div class="row g-3 mb-4">
+            <div class="col-xl-3 col-md-6">
+                <a href="{{ route('dashboard.students.index') }}" style="text-decoration:none">
+                    <div class="stat-card" style="border-left: 4px solid #2563eb;cursor:pointer">
+                        <div class="d-flex justify-content-between align-items-start">
+                            <div>
+                                <div class="stat-number text-primary">{{ number_format($stats['total_students']) }}</div>
+                                <div class="stat-label">Total Students</div>
+                                <small class="text-success mt-1 d-block">
+                                    <i class="fas fa-arrow-up"></i> Active Enrollment
+                                </small>
+                            </div>
+                            <div class="stat-icon" style="background:#dbeafe">
+                                <i class="fas fa-user-graduate" style="color:#2563eb"></i>
+                            </div>
                         </div>
-                        <div class="stat-icon" style="background:#dbeafe">
-                            <i class="fas fa-user-graduate" style="color:#2563eb"></i>
+                        <div class="mt-3">
+                            <div class="progress" style="height:4px;border-radius:2px">
+                                <div class="progress-bar bg-primary" style="width:75%"></div>
+                            </div>
                         </div>
                     </div>
-                    <div class="mt-3">
-                        <div class="progress" style="height:4px;border-radius:2px">
-                            <div class="progress-bar bg-primary" style="width:75%"></div>
+                </a>
+            </div>
+            <div class="col-xl-3 col-md-6">
+                <a href="{{ route('dashboard.teachers.index') }}" style="text-decoration:none">
+                    <div class="stat-card" style="border-left: 4px solid #10b981;cursor:pointer">
+                        <div class="d-flex justify-content-between align-items-start">
+                            <div>
+                                <div class="stat-number text-success">{{ number_format($stats['total_teachers']) }}</div>
+                                <div class="stat-label">Total Teachers</div>
+                                <small class="text-success mt-1 d-block">
+                                    <i class="fas fa-check-circle"></i> All Active
+                                </small>
+                            </div>
+                            <div class="stat-icon" style="background:#dcfce7">
+                                <i class="fas fa-chalkboard-teacher" style="color:#10b981"></i>
+                            </div>
+                        </div>
+                        <div class="mt-3">
+                            <div class="progress" style="height:4px;border-radius:2px">
+                                <div class="progress-bar bg-success" style="width:90%"></div>
+                            </div>
                         </div>
                     </div>
-                </div>
-            </a>
-        </div>
-        <div class="col-xl-3 col-md-6">
-            <a href="{{ route('dashboard.teachers.index') }}" style="text-decoration:none">
-                <div class="stat-card" style="border-left: 4px solid #10b981;cursor:pointer">
-                    <div class="d-flex justify-content-between align-items-start">
-                        <div>
-                            <div class="stat-number text-success">{{ number_format($stats['total_teachers']) }}</div>
-                            <div class="stat-label">Total Teachers</div>
-                            <small class="text-success mt-1 d-block">
-                                <i class="fas fa-check-circle"></i> All Active
-                            </small>
+                </a>
+            </div>
+            <div class="col-xl-3 col-md-6">
+                <a href="{{ route('dashboard.attendance.index') }}" style="text-decoration:none">
+                    <div class="stat-card" style="border-left: 4px solid #f59e0b;cursor:pointer">
+                        <div class="d-flex justify-content-between align-items-start">
+                            <div>
+                                <div class="stat-number" style="color:#f59e0b">{{ $stats['present_today'] }}</div>
+                                <div class="stat-label">Present Today</div>
+                                <small class="text-danger mt-1 d-block">
+                                    <i class="fas fa-times-circle"></i> {{ $stats['absent_today'] }} absent
+                                </small>
+                            </div>
+                            <div class="stat-icon" style="background:#fef9c3">
+                                <i class="fas fa-clipboard-check" style="color:#f59e0b"></i>
+                            </div>
                         </div>
-                        <div class="stat-icon" style="background:#dcfce7">
-                            <i class="fas fa-chalkboard-teacher" style="color:#10b981"></i>
-                        </div>
-                    </div>
-                    <div class="mt-3">
-                        <div class="progress" style="height:4px;border-radius:2px">
-                            <div class="progress-bar bg-success" style="width:90%"></div>
-                        </div>
-                    </div>
-                </div>
-            </a>
-        </div>
-        <div class="col-xl-3 col-md-6">
-            <a href="{{ route('dashboard.attendance.index') }}" style="text-decoration:none">
-                <div class="stat-card" style="border-left: 4px solid #f59e0b;cursor:pointer">
-                    <div class="d-flex justify-content-between align-items-start">
-                        <div>
-                            <div class="stat-number" style="color:#f59e0b">{{ $stats['present_today'] }}</div>
-                            <div class="stat-label">Present Today</div>
-                            <small class="text-danger mt-1 d-block">
-                                <i class="fas fa-times-circle"></i> {{ $stats['absent_today'] }} absent
-                            </small>
-                        </div>
-                        <div class="stat-icon" style="background:#fef9c3">
-                            <i class="fas fa-clipboard-check" style="color:#f59e0b"></i>
+                        <div class="mt-3">
+                            @php $total = $stats['present_today'] + $stats['absent_today']; $pct = $total > 0 ? round($stats['present_today']/$total*100) : 0; @endphp
+                            <div class="progress" style="height:4px;border-radius:2px">
+                                <div class="progress-bar bg-warning" style="width:{{ $pct }}%"></div>
+                            </div>
+                            <small class="text-muted" style="font-size:0.75rem">{{ $pct }}% attendance rate</small>
                         </div>
                     </div>
-                    <div class="mt-3">
-                        @php $total = $stats['present_today'] + $stats['absent_today']; $pct = $total > 0 ? round($stats['present_today']/$total*100) : 0; @endphp
-                        <div class="progress" style="height:4px;border-radius:2px">
-                            <div class="progress-bar bg-warning" style="width:{{ $pct }}%"></div>
+                </a>
+            </div>
+            <div class="col-xl-3 col-md-6">
+                <a href="{{ route('dashboard.fees.index') }}" style="text-decoration:none">
+                    <div class="stat-card" style="border-left: 4px solid #8b5cf6;cursor:pointer">
+                        <div class="d-flex justify-content-between align-items-start">
+                            <div>
+                                <div class="stat-number" style="color:#8b5cf6">PKR {{ number_format($stats['fees_collected']) }}</div>
+                                <div class="stat-label">Fees Collected</div>
+                                <small class="text-danger mt-1 d-block">
+                                    <i class="fas fa-exclamation-circle"></i> PKR {{ number_format($stats['fees_pending']) }} pending
+                                </small>
+                            </div>
+                            <div class="stat-icon" style="background:#ede9fe">
+                                <i class="fas fa-money-bill-wave" style="color:#8b5cf6"></i>
+                            </div>
                         </div>
-                        <small class="text-muted" style="font-size:0.75rem">{{ $pct }}% attendance rate</small>
-                    </div>
-                </div>
-            </a>
-        </div>
-        <div class="col-xl-3 col-md-6">
-            <a href="{{ route('dashboard.fees.index') }}" style="text-decoration:none">
-                <div class="stat-card" style="border-left: 4px solid #8b5cf6;cursor:pointer">
-                    <div class="d-flex justify-content-between align-items-start">
-                        <div>
-                            <div class="stat-number" style="color:#8b5cf6">PKR {{ number_format($stats['fees_collected']) }}</div>
-                            <div class="stat-label">Fees Collected</div>
-                            <small class="text-danger mt-1 d-block">
-                                <i class="fas fa-exclamation-circle"></i> PKR {{ number_format($stats['fees_pending']) }} pending
-                            </small>
-                        </div>
-                        <div class="stat-icon" style="background:#ede9fe">
-                            <i class="fas fa-money-bill-wave" style="color:#8b5cf6"></i>
+                        <div class="mt-3">
+                            <div class="progress" style="height:4px;border-radius:2px">
+                                <div class="progress-bar" style="background:#8b5cf6;width:65%"></div>
+                            </div>
                         </div>
                     </div>
-                    <div class="mt-3">
-                        <div class="progress" style="height:4px;border-radius:2px">
-                            <div class="progress-bar" style="background:#8b5cf6;width:65%"></div>
-                        </div>
-                    </div>
-                </div>
-            </a>
-        </div>
+                </a>
+            </div>
+        </div> {{-- ✅ Row 1 closed --}}
+
         {{-- Row 2: Secondary Stats --}}
         <div class="row g-3 mb-4">
             <div class="col-xl-2 col-md-4">
@@ -183,10 +186,10 @@
                     </div>
                 </a>
             </div>
-        </div>
+        </div> {{-- ✅ Row 2 closed --}}
+
         {{-- Row 3: Charts --}}
         <div class="row g-3 mb-4">
-            {{-- Attendance Bar Chart --}}
             <div class="col-xl-8">
                 <div class="page-card h-100">
                     <div class="d-flex justify-content-between align-items-center mb-4">
@@ -206,7 +209,6 @@
                     <canvas id="attendanceChart" height="90"></canvas>
                 </div>
             </div>
-            {{-- Donut Chart --}}
             <div class="col-xl-4">
                 <div class="page-card h-100">
                     <div class="mb-4">
@@ -236,8 +238,9 @@
                     </div>
                 </div>
             </div>
-        </div>
-        {{-- Row 4: Fees Chart + Student Gender --}}
+        </div> {{-- ✅ Row 3 closed --}}
+
+        {{-- Row 4: Fees Chart + Students by Class --}}
         <div class="row g-3 mb-4">
             <div class="col-xl-6">
                 <div class="page-card">
@@ -257,10 +260,10 @@
                     <canvas id="classChart" height="120"></canvas>
                 </div>
             </div>
-        </div>
+        </div> {{-- ✅ Row 4 closed --}}
+
         {{-- Row 5: Recent Students + Upcoming Exams + Notices --}}
         <div class="row g-3">
-            {{-- Recent Students --}}
             <div class="col-xl-5">
                 <div class="page-card">
                     <div class="d-flex justify-content-between align-items-center mb-3">
@@ -311,7 +314,6 @@
                     </div>
                 </div>
             </div>
-            {{-- Upcoming Exams --}}
             <div class="col-xl-4">
                 <div class="page-card">
                     <div class="d-flex justify-content-between align-items-center mb-3">
@@ -320,18 +322,18 @@
                     </div>
                     @forelse($upcomingExams as $exam)
                         <div class="d-flex align-items-center gap-3 mb-3 p-2 rounded" style="background:#f8fafc;border-left:3px solid #2563eb">
-                        <div>
-                            <div class="fw-500" style="font-size:0.875rem;font-weight:500">{{ $exam->name }}</div>
-                            <small class="text-muted">
-                                <i class="fas fa-calendar me-1"></i>
-                                {{ \Carbon\Carbon::parse($exam->start_date)->format('d M') }}
-                                — {{ \Carbon\Carbon::parse($exam->end_date)->format('d M Y') }}
-                            </small>
+                            <div>
+                                <div class="fw-500" style="font-size:0.875rem;font-weight:500">{{ $exam->name }}</div>
+                                <small class="text-muted">
+                                    <i class="fas fa-calendar me-1"></i>
+                                    {{ \Carbon\Carbon::parse($exam->start_date)->format('d M') }}
+                                    — {{ \Carbon\Carbon::parse($exam->end_date)->format('d M Y') }}
+                                </small>
+                            </div>
+                            <span class="ms-auto badge" style="background:#dbeafe;color:#1d4ed8;white-space:nowrap">
+                                {{ ucfirst($exam->status) }}
+                            </span>
                         </div>
-                        <span class="ms-auto badge" style="background:#dbeafe;color:#1d4ed8;white-space:nowrap">
-                            {{ ucfirst($exam->status) }}
-                        </span>
-                    </div>
                     @empty
                         <div class="text-center text-muted py-3">
                             <i class="fas fa-file-alt fa-2x mb-2 d-block" style="color:#cbd5e1"></i>
@@ -340,7 +342,6 @@
                     @endforelse
                 </div>
             </div>
-            {{-- Recent Notices --}}
             <div class="col-xl-3">
                 <div class="page-card">
                     <div class="d-flex justify-content-between align-items-center mb-3">
@@ -360,121 +361,121 @@
                     @endforeach
                 </div>
             </div>
-        </div>
-    </div>
-@endsection
+        </div> {{-- ✅ Row 5 closed --}}
 
-@push('scripts')
-    <script>
-        const attendanceData = @json($attendanceData);
-        const feesData       = @json($feesData);
-        // ===== Attendance Bar Chart =====
-        new Chart(document.getElementById('attendanceChart'), {
-            type: 'bar',
-            data: {
-                labels: attendanceData.map(d => d.month),
-                datasets: [
-                    {
-                        label: 'Present',
-                        data: attendanceData.map(d => d.present),
-                        backgroundColor: 'rgba(37,99,235,0.85)',
-                        borderRadius: 6,
-                        borderSkipped: false,
-                    },
-                    {
-                        label: 'Absent',
-                        data: attendanceData.map(d => d.absent),
-                        backgroundColor: 'rgba(239,68,68,0.5)',
-                        borderRadius: 6,
-                        borderSkipped: false,
-                    }
-                ]
-            },
-            options: {
-                responsive: true,
-                plugins: {
-                    legend: { display: false },
-                    tooltip: {
-                        callbacks: {
-                            label: ctx => ctx.dataset.label + ': ' + ctx.parsed.y + ' students'
+    @endsection
+
+    @push('scripts')
+        <script>
+            const attendanceData = @json($attendanceData);
+            const feesData       = @json($feesData);
+
+            new Chart(document.getElementById('attendanceChart'), {
+                type: 'bar',
+                data: {
+                    labels: attendanceData.map(d => d.month),
+                    datasets: [
+                        {
+                            label: 'Present',
+                            data: attendanceData.map(d => d.present),
+                            backgroundColor: 'rgba(37,99,235,0.85)',
+                            borderRadius: 6,
+                            borderSkipped: false,
+                        },
+                        {
+                            label: 'Absent',
+                            data: attendanceData.map(d => d.absent),
+                            backgroundColor: 'rgba(239,68,68,0.5)',
+                            borderRadius: 6,
+                            borderSkipped: false,
                         }
-                    }
+                    ]
                 },
-                scales: {
-                    y: { beginAtZero: true, grid: { color: '#f1f5f9' }, ticks: { font: { size: 11 } } },
-                    x: { grid: { display: false }, ticks: { font: { size: 11 } } }
+                options: {
+                    responsive: true,
+                    plugins: {
+                        legend: { display: false },
+                        tooltip: {
+                            callbacks: {
+                                label: ctx => ctx.dataset.label + ': ' + ctx.parsed.y + ' students'
+                            }
+                        }
+                    },
+                    scales: {
+                        y: { beginAtZero: true, grid: { color: '#f1f5f9' }, ticks: { font: { size: 11 } } },
+                        x: { grid: { display: false }, ticks: { font: { size: 11 } } }
+                    }
                 }
-            }
-        });
-        // ===== Today Donut Chart =====
-        new Chart(document.getElementById('todayChart'), {
-            type: 'doughnut',
-            data: {
-                labels: ['Present', 'Absent'],
-                datasets: [{
-                    data: [{{ $stats['present_today'] }}, {{ $stats['absent_today'] }}],
-                    backgroundColor: ['#2563eb', '#fca5a5'],
-                    borderWidth: 0,
-                    cutout: '75%',
-                }]
-            },
-            options: {
-                responsive: true,
-                plugins: { legend: { display: false }, tooltip: { enabled: true } }
-            }
-        });
-        // ===== Monthly Fees Line Chart =====
-        new Chart(document.getElementById('feesChart'), {
-            type: 'line',
-            data: {
-                labels: feesData.map(d => d.month),
-                datasets: [{
-                    label: 'Collected (PKR)',
-                    data: feesData.map(d => d.collected),
-                    borderColor: '#8b5cf6',
-                    backgroundColor: 'rgba(139,92,246,0.1)',
-                    borderWidth: 2.5,
-                    tension: 0.4,
-                    fill: true,
-                    pointBackgroundColor: '#8b5cf6',
-                    pointRadius: 4,
-                }]
-            },
-            options: {
-                responsive: true,
-                plugins: { legend: { display: false } },
-                scales: {
-                    y: { beginAtZero: true, grid: { color: '#f1f5f9' }, ticks: { font: { size: 11 }, callback: v => 'PKR ' + v.toLocaleString() } },
-                    x: { grid: { display: false }, ticks: { font: { size: 11 } } }
+            });
+
+            new Chart(document.getElementById('todayChart'), {
+                type: 'doughnut',
+                data: {
+                    labels: ['Present', 'Absent'],
+                    datasets: [{
+                        data: [{{ $stats['present_today'] }}, {{ $stats['absent_today'] }}],
+                        backgroundColor: ['#2563eb', '#fca5a5'],
+                        borderWidth: 0,
+                        cutout: '75%',
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    plugins: { legend: { display: false }, tooltip: { enabled: true } }
                 }
-            }
-        });
-        // ===== Students by Class Bar Chart =====
-        const classLabels = @json($classStats['labels'] ?? []);
-        const classData   = @json($classStats['data'] ?? []);
-        new Chart(document.getElementById('classChart'), {
-            type: 'bar',
-            data: {
-                labels: classLabels,
-                datasets: [{
-                    label: 'Students',
-                    data: classData,
-                    backgroundColor: [
-                        '#2563eb','#10b981','#f59e0b','#8b5cf6','#ec4899',
-                        '#06b6d4','#84cc16','#f97316','#6366f1','#14b8a6'
-                    ],
-                    borderRadius: 6,
-                    borderSkipped: false,
-                }]
-            },
-            options: {
-                responsive: true,
-                plugins: { legend: { display: false } },
-                scales: {
-                    y: { beginAtZero: true, grid: { color: '#f1f5f9' }, ticks: { font: { size: 11 } } },
-                    x: { grid: { display: false }, ticks: { font: { size: 10 } } }
+            });
+
+            new Chart(document.getElementById('feesChart'), {
+                type: 'line',
+                data: {
+                    labels: feesData.map(d => d.month),
+                    datasets: [{
+                        label: 'Collected (PKR)',
+                        data: feesData.map(d => d.collected),
+                        borderColor: '#8b5cf6',
+                        backgroundColor: 'rgba(139,92,246,0.1)',
+                        borderWidth: 2.5,
+                        tension: 0.4,
+                        fill: true,
+                        pointBackgroundColor: '#8b5cf6',
+                        pointRadius: 4,
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    plugins: { legend: { display: false } },
+                    scales: {
+                        y: { beginAtZero: true, grid: { color: '#f1f5f9' }, ticks: { font: { size: 11 }, callback: v => 'PKR ' + v.toLocaleString() } },
+                        x: { grid: { display: false }, ticks: { font: { size: 11 } } }
+                    }
                 }
-            }
-        });
-    </script>
-@endpush
+            });
+
+            const classLabels = @json($classStats['labels'] ?? []);
+            const classData   = @json($classStats['data'] ?? []);
+            new Chart(document.getElementById('classChart'), {
+                type: 'bar',
+                data: {
+                    labels: classLabels,
+                    datasets: [{
+                        label: 'Students',
+                        data: classData,
+                        backgroundColor: [
+                            '#2563eb','#10b981','#f59e0b','#8b5cf6','#ec4899',
+                            '#06b6d4','#84cc16','#f97316','#6366f1','#14b8a6'
+                        ],
+                        borderRadius: 6,
+                        borderSkipped: false,
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    plugins: { legend: { display: false } },
+                    scales: {
+                        y: { beginAtZero: true, grid: { color: '#f1f5f9' }, ticks: { font: { size: 11 } } },
+                        x: { grid: { display: false }, ticks: { font: { size: 10 } } }
+                    }
+                }
+            });
+        </script>
+    @endpush
