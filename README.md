@@ -125,7 +125,7 @@ php artisan serve
 <img width="1903" height="913" alt="Screenshot 2026-08-07 100725" src="https://github.com/user-attachments/assets/28a9484f-84dc-40dd-9b42-5fdf00cd01a9" />
 
 ### Students
-![Students](screenshots/students.png)
+<img width="1906" height="913" alt="Screenshot 2026-08-13 093640" src="https://github.com/user-attachments/assets/6c113195-891c-46ef-a1fb-c3292a22e0f6" />
 
 ### Public Website
 <img width="1908" height="907" alt="Screenshot 2026-08-07 100551" src="https://github.com/user-attachments/assets/4a12c19c-b555-44d4-89c6-358e6d486e64" />
