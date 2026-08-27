@@ -35,17 +35,17 @@
                     </select>
                 </div>
                 <div class="col-md-4">
-                    <label class="form-label">Amount (PKR)</label>
+                    <label class="form-label">Amount ({{ setting('currency', 'KES') }})</label>
                     <input type="number" name="amount" class="form-control"
                         value="{{ old('amount', $fee->amount) }}" min="0">
                 </div>
                 <div class="col-md-4">
-                    <label class="form-label">Discount (PKR)</label>
+                    <label class="form-label">Discount ({{ setting('currency', 'KES') }})</label>
                     <input type="number" name="discount" class="form-control"
                         value="{{ old('discount', $fee->discount) }}" min="0">
                 </div>
                 <div class="col-md-4">
-                    <label class="form-label">Fine (PKR)</label>
+                    <label class="form-label">Fine ({{ setting('currency', 'KES') }})</label>
                     <input type="number" name="fine" class="form-control"
                         value="{{ old('fine', $fee->fine) }}" min="0">
                 </div>
