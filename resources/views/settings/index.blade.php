@@ -155,7 +155,7 @@
                     </div>
                     <div class="mb-2 d-flex justify-content-between">
                         <small class="text-muted">Timezone</small>
-                        <span class="badge" style="background:#dcfce7;color:#166534">{{ $settings['timezone'] ?? 'Asia/Karachi' }}</span>
+                        <span class="badge" style="background:#dcfce7;color:#166534">{{ $settings['timezone'] ?? 'Africa/Nairobi' }}</span>
                     </div>
                     <div class="mb-2 d-flex justify-content-between">
                         <small class="text-muted">Session</small>
