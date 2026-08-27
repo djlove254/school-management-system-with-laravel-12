@@ -67,8 +67,8 @@
                         <div class="col-md-4">
                             <label class="form-label">Timezone</label>
                             <select name="timezone" class="form-select">
-                                @foreach(['Asia/Karachi','Asia/Dubai','Asia/Riyadh','Europe/London','America/New_York'] as $tz)
-                                    <option value="{{ $tz }}" {{ ($settings['timezone'] ?? 'Asia/Karachi') == $tz ? 'selected' : '' }}>{{ $tz }}</option>
+                                @foreach(['Africa/Nairobi','Asia/Dubai','Asia/Riyadh','Asia/Karachi','Europe/London','America/New_York'] as $tz)
+                                    <option value="{{ $tz }}" {{ ($settings['timezone'] ?? 'Africa/Nairobi') == $tz ? 'selected' : '' }}>{{ $tz }}</option>
                                 @endforeach
                             </select>
                         </div>
@@ -79,7 +79,7 @@
                                 placeholder="2025-2026">
                         </div>
                         <div class="col-md-4">
-                            <label class="form-label">Library Fine Per Day (KES)</label>
+                            <label class="form-label">Library Fine Per Day ({{ $settings['currency'] ?? 'KES' }})</label>
                             <input type="number" name="fine_per_day" class="form-control"
                                 value="{{ $settings['fine_per_day'] ?? '5' }}" min="0">
                         </div>
@@ -163,7 +163,7 @@
                     </div>
                     <div class="mb-2 d-flex justify-content-between">
                         <small class="text-muted">Fine/Day</small>
-                        <span class="badge" style="background:#fee2e2;color:#991b1b">KES {{ $settings['fine_per_day'] ?? '5' }}</span>
+                        <span class="badge" style="background:#fee2e2;color:#991b1b">{{ $settings['currency'] ?? 'KES' }} {{ $settings['fine_per_day'] ?? '5' }}</span>
                     </div>
                 </div>
                 {{-- Save Button --}}
