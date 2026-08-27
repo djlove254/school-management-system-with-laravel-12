@@ -24,7 +24,9 @@
             <div class="stat-card" style="border-left:4px solid #10b981">
                 <div class="d-flex justify-content-between">
                     <div>
-                        <div class="stat-number text-success">PKR {{ number_format($summary['total_collected']) }}</div>
+                        <div class="stat-number text-success">
+    {{ setting('currency', 'KES') }} {{ number_format($summary['total_collected']) }}
+</div>
                         <div class="stat-label">Total Collected</div>
                     </div>
                     <div class="stat-icon" style="background:#dcfce7"><i class="fas fa-check-circle" style="color:#10b981"></i></div>
@@ -35,7 +37,9 @@
             <div class="stat-card" style="border-left:4px solid #f59e0b">
                 <div class="d-flex justify-content-between">
                     <div>
-                        <div class="stat-number text-warning">PKR {{ number_format($summary['total_pending']) }}</div>
+                        <div class="stat-number text-warning">
+    {{ setting('currency', 'KES') }} {{ number_format($summary['total_pending']) }}
+</div>
                         <div class="stat-label">Total Pending</div>
                     </div>
                     <div class="stat-icon" style="background:#fef9c3"><i class="fas fa-clock" style="color:#f59e0b"></i></div>
@@ -117,10 +121,10 @@
                                 <small>{{ $fee->month ?? '-' }}</small>
                             </td>
                             <td>
-                                <small>PKR {{ number_format($fee->amount) }}</small>
+                                <small>{{ setting('currency', 'KES') }} {{ number_format($fee->amount) }}</small>
                             </td>
                             <td>
-                                <small class="text-success">PKR {{ number_format($fee->paid_amount) }}</small>
+                                <small class="text-success">{{ setting('currency', 'KES') }} {{ number_format($fee->paid_amount) }}</small>
                             </td>
                             <td>
                                 <small>{{ \Carbon\Carbon::parse($fee->due_date)->format('d M Y') }}</small>
@@ -181,7 +185,10 @@
                             <input type="text" id="dueAmount" class="form-control" readonly style="background:#f8fafc">
                         </div>
                         <div class="mb-3">
-                            <label class="form-label">Amount to Collect (PKR) <span class="text-danger">*</span></label>
+                            <label class="form-label">
+    Amount to Collect ({{ setting('currency', 'KES') }})
+    <span class="text-danger">*</span>
+</label>
                             <input type="number" name="paid_amount" id="paidAmount" class="form-control" min="0" required>
                         </div>
                     </div>
@@ -199,7 +206,8 @@
     <script>
         function collectFee(feeId, amount) {
             document.getElementById('collectForm').action = `/dashboard/fees/${feeId}/collect`;
-            document.getElementById('dueAmount').value    = 'PKR ' + amount.toLocaleString();
+            document.getElementById('dueAmount').value =
+    @json(setting('currency', 'KES')) + ' ' + amount.toLocaleString();
             document.getElementById('paidAmount').value   = amount;
             new bootstrap.Modal(document.getElementById('collectModal')).show();
         }
