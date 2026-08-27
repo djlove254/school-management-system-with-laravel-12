@@ -65,19 +65,21 @@
 </td>
                         </tr>
                         @if($fee->discount > 0)
-                            <tr>
-                                <td class="text-end text-success">
-    - {{ setting('currency', 'KES') }} {{ number_format($fee->discount) }}
-</td>
-                            </tr>
-                        @endif
+    <tr>
+        <td class="text-success">Discount</td>
+        <td class="text-end text-success">
+            - {{ setting('currency', 'KES') }} {{ number_format($fee->discount) }}
+        </td>
+    </tr>
+@endif
                         @if($fee->fine > 0)
-                            <tr>
-                                <td class="text-end text-danger">
-    + {{ setting('currency', 'KES') }} {{ number_format($fee->fine) }}
-</td>
-                            </tr>
-                        @endif
+    <tr>
+        <td class="text-danger">Fine</td>
+        <td class="text-end text-danger">
+            + {{ setting('currency', 'KES') }} {{ number_format($fee->fine) }}
+        </td>
+    </tr>
+@endif
                     </tbody>
                     <tfoot>
                         <tr style="background:#f8fafc">
