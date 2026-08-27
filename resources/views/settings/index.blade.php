@@ -59,8 +59,8 @@
                         <div class="col-md-4">
                             <label class="form-label">Currency</label>
                             <select name="currency" class="form-select">
-                                @foreach(['PKR','USD','GBP','EUR','SAR','AED'] as $cur)
-                                    <option value="{{ $cur }}" {{ ($settings['currency'] ?? 'PKR') == $cur ? 'selected' : '' }}>{{ $cur }}</option>
+                                @foreach(['KES','USD','GBP','EUR','SAR','AED','PKR'] as $cur)
+                                    <option value="{{ $cur }}" {{ ($settings['currency'] ?? 'KES') == $cur ? 'selected' : '' }}>{{ $cur }}</option>
                                 @endforeach
                             </select>
                         </div>
@@ -79,7 +79,7 @@
                                 placeholder="2025-2026">
                         </div>
                         <div class="col-md-4">
-                            <label class="form-label">Library Fine Per Day (PKR)</label>
+                            <label class="form-label">Library Fine Per Day (KES)</label>
                             <input type="number" name="fine_per_day" class="form-control"
                                 value="{{ $settings['fine_per_day'] ?? '5' }}" min="0">
                         </div>
@@ -151,7 +151,7 @@
                     <h6 class="fw-bold mb-3" style="color:#1e293b">Current Settings</h6>
                     <div class="mb-2 d-flex justify-content-between">
                         <small class="text-muted">Currency</small>
-                        <span class="badge" style="background:#dbeafe;color:#1d4ed8">{{ $settings['currency'] ?? 'PKR' }}</span>
+                        <span class="badge" style="background:#dbeafe;color:#1d4ed8">{{ $settings['currency'] ?? 'KES' }}</span>
                     </div>
                     <div class="mb-2 d-flex justify-content-between">
                         <small class="text-muted">Timezone</small>
@@ -163,7 +163,7 @@
                     </div>
                     <div class="mb-2 d-flex justify-content-between">
                         <small class="text-muted">Fine/Day</small>
-                        <span class="badge" style="background:#fee2e2;color:#991b1b">PKR {{ $settings['fine_per_day'] ?? '5' }}</span>
+                        <span class="badge" style="background:#fee2e2;color:#991b1b">KES {{ $settings['fine_per_day'] ?? '5' }}</span>
                     </div>
                 </div>
                 {{-- Save Button --}}
