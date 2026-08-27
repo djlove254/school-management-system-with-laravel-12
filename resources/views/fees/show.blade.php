@@ -55,19 +55,19 @@
                     </div>
                     <div class="col-md-6">
                         <small class="text-muted d-block">Amount</small>
-                        <strong>PKR {{ number_format($fee->amount) }}</strong>
+                        <strong>{{ setting('currency', 'KES') }} {{ number_format($fee->amount) }}</strong>
                     </div>
                     <div class="col-md-6">
                         <small class="text-muted d-block">Discount</small>
-                        <strong class="text-success">PKR {{ number_format($fee->discount) }}</strong>
+                        <strong class="text-success">{{ setting('currency', 'KES') }} {{ number_format($fee->discount) }}</strong>
                     </div>
                     <div class="col-md-6">
                         <small class="text-muted d-block">Fine</small>
-                        <strong class="text-danger">PKR {{ number_format($fee->fine) }}</strong>
+                        <strong class="text-danger">{{ setting('currency', 'KES') }} {{ number_format($fee->fine) }}</strong>
                     </div>
                     <div class="col-md-6">
                         <small class="text-muted d-block">Paid Amount</small>
-                        <strong class="text-primary">PKR {{ number_format($fee->paid_amount) }}</strong>
+                        <strong class="text-primary">{{ setting('currency', 'KES') }} {{ number_format($fee->paid_amount) }}</strong>
                     </div>
                     <div class="col-md-6">
                         <small class="text-muted d-block">Due Date</small>
@@ -98,10 +98,10 @@
                 {{-- Total --}}
                 <div class="p-3 rounded" style="background:#f0fdf4;border:1px solid #bbf7d0">
                     <div class="d-flex justify-content-between">
-                        <span class="fw-bold">Net Amount Due:</span>
+                        <span class="fw-bold">Net  Due:</span>
                         <span class="fw-bold text-success fs-5">
-                            PKR {{ number_format($fee->amount + $fee->fine - $fee->discount) }}
-                        </span>
+    {{ setting('currency', 'KES') }} {{ number_format($fee->amount + $fee->fine - $fee->discount) }}
+</span>
                     </div>
                 </div>
 
@@ -109,7 +109,7 @@
                 @if($fee->status !== 'paid')
                 <div class="mt-4">
                     <button type="button" class="btn btn-success w-100"
-                            onclick="collectFee({{ $fee->id }}, {{ $fee->amount + $fee->fine - $fee->discount }})">
+                            onclick="collectFee({{ $fee->id }}, {{ $fee-> + $fee->fine - $fee->discount }})">
                         <i class="fas fa-money-bill me-2"></i>Collect Payment
                     </button>
                 </div>
@@ -126,8 +126,8 @@
                                 @csrf
                                 <div class="modal-body">
                                     <div class="mb-3">
-                                        <label class="form-label">Amount (PKR)</label>
-                                        <input type="number" name="paid_amount" id="paidAmount"
+                                        <label class="form-label">Amount ({{ setting('currency', 'KES') }})</label>
+                                        <input type="number" name="paid_" id="paid"
                                             class="form-control" min="0" required>
                                     </div>
                                 </div>
@@ -150,9 +150,9 @@
 
 @push('scripts')
     <script>
-        function collectFee(feeId, amount) {
+        function collectFee(feeId, ) {
             document.getElementById('collectForm').action = `/dashboard/fees/${feeId}/collect`;
-            document.getElementById('paidAmount').value   = amount;
+            document.getElementById('paid').value   = ;
             new bootstrap.Modal(document.getElementById('collectModal')).show();
         }
     </script>
