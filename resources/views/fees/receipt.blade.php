@@ -8,7 +8,9 @@
                 {{-- Receipt Header --}}
                 <div class="text-center border-bottom pb-3 mb-3">
                     <h4 class="fw-bold mb-1" style="color:#1e293b">{{ setting('school_name', 'School Management System') }}</h4>
-                    <p class="text-muted mb-0" style="font-size:0.875rem">{{ setting('school_address', 'Hyderabad, Sindh, Pakistan') }}</p>
+                    <p class="text-muted mb-0" style="font-size:0.875rem">
+    {{ setting('school_address', 'Kenya') }}
+</p>
                     <p class="text-muted mb-0" style="font-size:0.875rem">{{ setting('school_phone') }} | {{ setting('school_email') }}</p>
                     <div class="mt-2">
                         <span class="badge" style="background:#dbeafe;color:#1d4ed8;font-size:0.875rem;padding:6px 16px">
@@ -58,23 +60,31 @@
                     <tbody>
                         <tr>
                             <td>{{ $fee->feeType->name ?? 'Fee' }}</td>
-                            <td class="text-end">PKR {{ number_format($fee->amount) }}</td>
+                            <td class="text-end">
+    {{ setting('currency', 'KES') }} {{ number_format($fee->amount) }}
+</td>
                         </tr>
                         @if($fee->discount > 0)
                             <tr>
-                                <td class="text-success">Discount</td><td class="text-end text-success">- PKR {{ number_format($fee->discount) }}</td>
+                                <td class="text-end text-success">
+    - {{ setting('currency', 'KES') }} {{ number_format($fee->discount) }}
+</td>
                             </tr>
                         @endif
                         @if($fee->fine > 0)
                             <tr>
-                                <td class="text-danger">Fine</td><td class="text-end text-danger">+ PKR {{ number_format($fee->fine) }}</td>
+                                <td class="text-end text-danger">
+    + {{ setting('currency', 'KES') }} {{ number_format($fee->fine) }}
+</td>
                             </tr>
                         @endif
                     </tbody>
                     <tfoot>
                         <tr style="background:#f8fafc">
                             <th>Total Paid</th>
-                            <th class="text-end text-success">PKR {{ number_format($fee->paid_amount) }}</th>
+                            <th class="text-end text-success">
+    {{ setting('currency', 'KES') }} {{ number_format($fee->paid_amount) }}
+</th>
                         </tr>
                     </tfoot>
                 </table>
