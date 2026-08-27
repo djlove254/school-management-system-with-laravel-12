@@ -98,7 +98,7 @@
                 {{-- Total --}}
                 <div class="p-3 rounded" style="background:#f0fdf4;border:1px solid #bbf7d0">
                     <div class="d-flex justify-content-between">
-                        <span class="fw-bold">Net  Due:</span>
+                        <span class="fw-bold">Net Amount Due:</span>
                         <span class="fw-bold text-success fs-5">
     {{ setting('currency', 'KES') }} {{ number_format($fee->amount + $fee->fine - $fee->discount) }}
 </span>
@@ -109,7 +109,7 @@
                 @if($fee->status !== 'paid')
                 <div class="mt-4">
                     <button type="button" class="btn btn-success w-100"
-                            onclick="collectFee({{ $fee->id }}, {{ $fee-> + $fee->fine - $fee->discount }})">
+                            onclick="collectFee({{ $fee->id }}, {{ $fee->amount + $fee->fine - $fee->discount }})">
                         <i class="fas fa-money-bill me-2"></i>Collect Payment
                     </button>
                 </div>
@@ -127,8 +127,8 @@
                                 <div class="modal-body">
                                     <div class="mb-3">
                                         <label class="form-label">Amount ({{ setting('currency', 'KES') }})</label>
-                                        <input type="number" name="paid_" id="paid"
-                                            class="form-control" min="0" required>
+                                        <input type="number" name="paid_amount" id="paidAmount"
+    class="form-control" min="0" required>
                                     </div>
                                 </div>
                                 <div class="modal-footer">
@@ -150,10 +150,10 @@
 
 @push('scripts')
     <script>
-        function collectFee(feeId, ) {
-            document.getElementById('collectForm').action = `/dashboard/fees/${feeId}/collect`;
-            document.getElementById('paid').value   = ;
-            new bootstrap.Modal(document.getElementById('collectModal')).show();
-        }
+        function collectFee(feeId, amount) {
+    document.getElementById('collectForm').action = `/dashboard/fees/${feeId}/collect`;
+    document.getElementById('paidAmount').value = amount;
+    new bootstrap.Modal(document.getElementById('collectModal')).show();
+}
     </script>
 @endpush
