@@ -15,32 +15,45 @@
             <i class="fas fa-file-csv me-1"></i>Export CSV
         </a>
     </div>
+
     <div class="row g-3 mb-4">
         <div class="col-md-3">
             <div class="stat-card text-center" style="border-left:4px solid #2563eb">
-                <div class="fw-bold fs-4 text-primary">PKR {{ number_format($summary['total_amount']) }}</div>
+                <div class="fw-bold fs-4 text-primary">
+                    {{ setting('currency', 'KES') }} {{ number_format($summary['total_amount']) }}
+                </div>
                 <div class="stat-label">Total Billed</div>
             </div>
         </div>
+
         <div class="col-md-3">
             <div class="stat-card text-center" style="border-left:4px solid #10b981">
-                <div class="fw-bold fs-4 text-success">PKR {{ number_format($summary['total_collected']) }}</div>
+                <div class="fw-bold fs-4 text-success">
+                    {{ setting('currency', 'KES') }} {{ number_format($summary['total_collected']) }}
+                </div>
                 <div class="stat-label">Collected</div>
             </div>
         </div>
+
         <div class="col-md-3">
             <div class="stat-card text-center" style="border-left:4px solid #f59e0b">
-                <div class="fw-bold fs-4 text-warning">PKR {{ number_format($summary['total_pending']) }}</div>
+                <div class="fw-bold fs-4 text-warning">
+                    {{ setting('currency', 'KES') }} {{ number_format($summary['total_pending']) }}
+                </div>
                 <div class="stat-label">Pending</div>
             </div>
         </div>
+
         <div class="col-md-3">
             <div class="stat-card text-center" style="border-left:4px solid #8b5cf6">
-                <div class="fw-bold fs-4" style="color:#8b5cf6">{{ $summary['total_paid'] }}</div>
+                <div class="fw-bold fs-4" style="color:#8b5cf6">
+                    {{ $summary['total_paid'] }}
+                </div>
                 <div class="stat-label">Paid Records</div>
             </div>
         </div>
     </div>
+
     <div class="page-card mb-3">
         <form method="GET" class="row g-3">
             <div class="col-md-4">
@@ -51,14 +64,18 @@
                     <option value="partial" {{ request('status') == 'partial' ? 'selected' : '' }}>Partial</option>
                 </select>
             </div>
+
             <div class="col-md-4">
                 <select name="month" class="form-select form-select-sm">
                     <option value="">All Months</option>
                     @foreach(['January','February','March','April','May','June','July','August','September','October','November','December'] as $m)
-                        <option value="{{ $m }}" {{ request('month') == $m ? 'selected' : '' }}>{{ $m }}</option>
+                        <option value="{{ $m }}" {{ request('month') == $m ? 'selected' : '' }}>
+                            {{ $m }}
+                        </option>
                     @endforeach
                 </select>
             </div>
+
             <div class="col-md-4 d-flex gap-2">
                 <button type="submit" class="btn btn-primary btn-sm">
                     <i class="fas fa-search me-1"></i>Filter
@@ -69,6 +86,7 @@
             </div>
         </form>
     </div>
+
     <div class="page-card">
         <div class="table-responsive">
             <table class="table table-hover datatable">
@@ -84,41 +102,61 @@
                         <th>Status</th>
                     </tr>
                 </thead>
+
                 <tbody>
                     @forelse($fees as $i => $fee)
                         <tr>
                             <td>{{ $i + 1 }}</td>
+
                             <td>
-                                <small style="font-weight:500">{{ $fee->student->user->name ?? '-' }}</small>
+                                <small style="font-weight:500">
+                                    {{ $fee->student->user->name ?? '-' }}
+                                </small>
                             </td>
+
                             <td>
                                 <small>{{ $fee->feeType->name ?? '-' }}</small>
                             </td>
+
                             <td>
                                 <small>{{ $fee->month ?? '-' }}</small>
                             </td>
+
                             <td>
-                                <small>PKR {{ number_format($fee->amount) }}</small>
+                                <small>
+                                    {{ setting('currency', 'KES') }} {{ number_format($fee->amount) }}
+                                </small>
                             </td>
+
                             <td>
-                                <small class="text-success">PKR {{ number_format($fee->paid_amount) }}</small>
+                                <small class="text-success">
+                                    {{ setting('currency', 'KES') }} {{ number_format($fee->paid_amount) }}
+                                </small>
                             </td>
+
                             <td>
-                                <small>{{ \Carbon\Carbon::parse($fee->due_date)->format('d M Y') }}</small>
+                                <small>
+                                    {{ \Carbon\Carbon::parse($fee->due_date)->format('d M Y') }}
+                                </small>
                             </td>
+
                             <td>
                                 @if($fee->status === 'paid')
                                     <span class="badge badge-active">Paid</span>
                                 @elseif($fee->status === 'pending')
                                     <span class="badge badge-pending">Pending</span>
                                 @else
-                                    <span class="badge" style="background:#dbeafe;color:#1d4ed8">{{ ucfirst($fee->status) }}</span>
+                                    <span class="badge" style="background:#dbeafe;color:#1d4ed8">
+                                        {{ ucfirst($fee->status) }}
+                                    </span>
                                 @endif
                             </td>
                         </tr>
                     @empty
                         <tr>
-                            <td colspan="8" class="text-center text-muted py-4">No fee records found</td>
+                            <td colspan="8" class="text-center text-muted py-4">
+                                No fee records found
+                            </td>
                         </tr>
                     @endforelse
                 </tbody>
