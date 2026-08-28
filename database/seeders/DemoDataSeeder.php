@@ -23,19 +23,34 @@ use App\Models\News;
 use App\Models\Testimonial;
 use Carbon\Carbon;
 use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Str;
 
 class DemoDataSeeder extends Seeder
 {
     public function run(): void
     {
+        /*
+        |--------------------------------------------------------------------------
+        | Academic Year
+        |--------------------------------------------------------------------------
+        */
+
         $year = AcademicYear::where('is_current', true)->first();
 
         if (!$year) {
-            $this->command?->error('No current academic year found. Create an academic year first.');
+            $this->command?->error(
+                'No current academic year found. Create an academic year first.'
+            );
+
             return;
         }
 
-        // ==================== CLASSES ====================
+        /*
+        |--------------------------------------------------------------------------
+        | Classes
+        |--------------------------------------------------------------------------
+        */
+
         $classNames = [
             'Class 1',
             'Class 2',
@@ -52,6 +67,7 @@ class DemoDataSeeder extends Seeder
         $classes = [];
 
         foreach ($classNames as $i => $name) {
+
             $classes[] = SchoolClass::firstOrCreate(
                 [
                     'name' => $name,
@@ -63,15 +79,20 @@ class DemoDataSeeder extends Seeder
             );
         }
 
-        // ==================== SECTIONS ====================
-        $sections = [];
+        /*
+        |--------------------------------------------------------------------------
+        | Sections
+        |--------------------------------------------------------------------------
+        */
 
         foreach ($classes as $class) {
-            foreach (['A', 'B'] as $sec) {
-                $sections[] = Section::firstOrCreate(
+
+            foreach (['A', 'B'] as $sectionName) {
+
+                Section::firstOrCreate(
                     [
                         'class_id' => $class->id,
-                        'name' => $sec,
+                        'name' => $sectionName,
                     ],
                     [
                         'capacity' => 40,
@@ -80,62 +101,77 @@ class DemoDataSeeder extends Seeder
             }
         }
 
-        // ==================== SUBJECTS ====================
+        /*
+        |--------------------------------------------------------------------------
+        | Subjects
+        |--------------------------------------------------------------------------
+        */
+
         $subjectData = [
+
             [
                 'name' => 'Mathematics',
                 'code' => 'MATH',
                 'full_marks' => 100,
                 'pass_marks' => 33,
             ],
+
             [
                 'name' => 'English',
                 'code' => 'ENG',
                 'full_marks' => 100,
                 'pass_marks' => 33,
             ],
+
             [
                 'name' => 'Kiswahili',
                 'code' => 'KIS',
                 'full_marks' => 100,
                 'pass_marks' => 33,
             ],
+
             [
                 'name' => 'Integrated Science',
                 'code' => 'SCI',
                 'full_marks' => 100,
                 'pass_marks' => 33,
             ],
+
             [
                 'name' => 'Social Studies',
                 'code' => 'SST',
                 'full_marks' => 100,
                 'pass_marks' => 33,
             ],
+
             [
                 'name' => 'Christian Religious Education',
                 'code' => 'CRE',
                 'full_marks' => 100,
                 'pass_marks' => 33,
             ],
+
             [
                 'name' => 'Computer Studies',
                 'code' => 'CS',
                 'full_marks' => 100,
                 'pass_marks' => 33,
             ],
+
             [
                 'name' => 'Agriculture',
                 'code' => 'AGR',
                 'full_marks' => 100,
                 'pass_marks' => 33,
             ],
+
             [
                 'name' => 'Creative Arts',
                 'code' => 'ART',
                 'full_marks' => 100,
                 'pass_marks' => 33,
             ],
+
             [
                 'name' => 'Business Studies',
                 'code' => 'BST',
@@ -144,88 +180,105 @@ class DemoDataSeeder extends Seeder
             ],
         ];
 
-        foreach ($subjectData as $sub) {
+        foreach ($subjectData as $subject) {
+
             Subject::firstOrCreate(
-                ['code' => $sub['code']],
-                $sub
+                ['code' => $subject['code']],
+                $subject
             );
         }
 
-        // ==================== TEACHERS ====================
+        /*
+        |--------------------------------------------------------------------------
+        | Teachers
+        |--------------------------------------------------------------------------
+        */
+
         $teacherData = [
+
             [
                 'name' => 'David Kiptoo',
                 'email' => 'david.teacher@school.ac.ke',
                 'gender' => 'male',
-                'qual' => 'B.Ed Mathematics',
-                'spec' => 'Mathematics',
+                'qualification' => 'B.Ed Mathematics',
+                'specialization' => 'Mathematics',
                 'salary' => 45000,
             ],
+
             [
                 'name' => 'Mercy Chebet',
                 'email' => 'mercy.teacher@school.ac.ke',
                 'gender' => 'female',
-                'qual' => 'B.Ed English',
-                'spec' => 'English',
+                'qualification' => 'B.Ed English',
+                'specialization' => 'English',
                 'salary' => 42000,
             ],
+
             [
                 'name' => 'Brian Ochieng',
                 'email' => 'brian.teacher@school.ac.ke',
                 'gender' => 'male',
-                'qual' => 'B.Ed Science',
-                'spec' => 'Integrated Science',
+                'qualification' => 'B.Ed Science',
+                'specialization' => 'Integrated Science',
                 'salary' => 46000,
             ],
+
             [
                 'name' => 'Faith Wanjiru',
                 'email' => 'faith.teacher@school.ac.ke',
                 'gender' => 'female',
-                'qual' => 'B.Ed Kiswahili',
-                'spec' => 'Kiswahili',
+                'qualification' => 'B.Ed Kiswahili',
+                'specialization' => 'Kiswahili',
                 'salary' => 43000,
             ],
+
             [
                 'name' => 'Samuel Kiplangat',
                 'email' => 'samuel.teacher@school.ac.ke',
                 'gender' => 'male',
-                'qual' => 'B.Ed Computer Studies',
-                'spec' => 'Computer Studies',
+                'qualification' => 'B.Ed Computer Studies',
+                'specialization' => 'Computer Studies',
                 'salary' => 48000,
             ],
+
             [
                 'name' => 'Esther Akinyi',
                 'email' => 'esther.teacher@school.ac.ke',
                 'gender' => 'female',
-                'qual' => 'B.Ed Social Studies',
-                'spec' => 'Social Studies',
+                'qualification' => 'B.Ed Social Studies',
+                'specialization' => 'Social Studies',
                 'salary' => 41000,
             ],
+
             [
                 'name' => 'Joseph Kibet',
                 'email' => 'joseph.teacher@school.ac.ke',
                 'gender' => 'male',
-                'qual' => 'B.Ed Agriculture',
-                'spec' => 'Agriculture',
+                'qualification' => 'B.Ed Agriculture',
+                'specialization' => 'Agriculture',
                 'salary' => 44000,
             ],
+
             [
                 'name' => 'Lydia Wambui',
                 'email' => 'lydia.teacher@school.ac.ke',
                 'gender' => 'female',
-                'qual' => 'B.Ed Creative Arts',
-                'spec' => 'Creative Arts',
+                'qualification' => 'B.Ed Creative Arts',
+                'specialization' => 'Creative Arts',
                 'salary' => 40000,
             ],
         ];
 
-        foreach ($teacherData as $i => $td) {
+        foreach ($teacherData as $i => $teacherDataItem) {
+
             $user = User::firstOrCreate(
-                ['email' => $td['email']],
                 [
-                    'name' => $td['name'],
+                    'email' => $teacherDataItem['email'],
+                ],
+                [
+                    'name' => $teacherDataItem['name'],
                     'password' => Hash::make('password123'),
-                    'gender' => $td['gender'],
+                    'gender' => $teacherDataItem['gender'],
                     'phone' => '+2547' . rand(10000000, 99999999),
                     'status' => 'active',
                 ]
@@ -236,20 +289,38 @@ class DemoDataSeeder extends Seeder
             }
 
             Teacher::firstOrCreate(
-                ['user_id' => $user->id],
                 [
-                    'employee_id' => 'EMP-2026-' . str_pad($i + 1, 3, '0', STR_PAD_LEFT),
+                    'user_id' => $user->id,
+                ],
+                [
+                    'employee_id' =>
+                        'EMP-2026-' .
+                        str_pad($i + 1, 3, '0', STR_PAD_LEFT),
+
                     'joining_date' => '2024-01-08',
-                    'qualification' => $td['qual'],
-                    'specialization' => $td['spec'],
-                    'salary' => $td['salary'],
+
+                    'qualification' =>
+                        $teacherDataItem['qualification'],
+
+                    'specialization' =>
+                        $teacherDataItem['specialization'],
+
+                    'salary' =>
+                        $teacherDataItem['salary'],
+
                     'status' => 'active',
                 ]
             );
         }
 
-        // ==================== STUDENTS ====================
+        /*
+        |--------------------------------------------------------------------------
+        | Students
+        |--------------------------------------------------------------------------
+        */
+
         $maleNames = [
+
             'Brian Kiptoo',
             'Kevin Otieno',
             'Dennis Mwangi',
@@ -273,6 +344,7 @@ class DemoDataSeeder extends Seeder
         ];
 
         $femaleNames = [
+
             'Sharon Jepchirchir',
             'Mercy Wanjiku',
             'Faith Akinyi',
@@ -297,13 +369,24 @@ class DemoDataSeeder extends Seeder
 
         $studentCount = 0;
 
+        /*
+         * We seed the first five classes with students so the demo
+         * database remains manageable while still having realistic data.
+         */
+
         foreach (array_slice($classes, 0, 5) as $class) {
-            $classSections = Section::where('class_id', $class->id)->get();
+
+            $classSections = Section::where(
+                'class_id',
+                $class->id
+            )->get();
 
             foreach ($classSections as $section) {
+
                 $count = rand(15, 20);
 
                 for ($i = 0; $i < $count; $i++) {
+
                     $isMale = rand(0, 1);
 
                     $names = $isMale
@@ -312,9 +395,12 @@ class DemoDataSeeder extends Seeder
 
                     $name = $names[array_rand($names)];
 
-                    $email = strtolower(
-                        str_replace(' ', '.', $name)
-                    ) . rand(100, 999) . '@student.school.ac.ke';
+                    $email =
+                        strtolower(
+                            str_replace(' ', '.', $name)
+                        )
+                        . rand(100, 999)
+                        . '@student.school.ac.ke';
 
                     if (User::where('email', $email)->exists()) {
                         continue;
@@ -336,17 +422,29 @@ class DemoDataSeeder extends Seeder
 
                     $studentCount++;
 
-                    $admNo = 'ADM-2026-' .
-                        str_pad($studentCount, 4, '0', STR_PAD_LEFT);
+                    $admissionNumber =
+                        'ADM-2026-' .
+                        str_pad(
+                            $studentCount,
+                            4,
+                            '0',
+                            STR_PAD_LEFT
+                        );
 
-                    $rollNo = $class->id .
+                    $rollNumber =
+                        $class->id .
                         $section->id .
-                        str_pad($studentCount, 3, '0', STR_PAD_LEFT);
+                        str_pad(
+                            $studentCount,
+                            3,
+                            '0',
+                            STR_PAD_LEFT
+                        );
 
                     Student::create([
                         'user_id' => $user->id,
-                        'roll_number' => $rollNo,
-                        'admission_number' => $admNo,
+                        'roll_number' => $rollNumber,
+                        'admission_number' => $admissionNumber,
                         'admission_date' => '2026-01-12',
                         'class_id' => $class->id,
                         'section_id' => $section->id,
@@ -357,10 +455,16 @@ class DemoDataSeeder extends Seeder
             }
         }
 
-        // ==================== ATTENDANCE ====================
+        /*
+        |--------------------------------------------------------------------------
+        | Attendance
+        |--------------------------------------------------------------------------
+        */
+
         $students = Student::all();
 
         for ($day = 30; $day >= 1; $day--) {
+
             $date = Carbon::now()
                 ->subDays($day)
                 ->toDateString();
@@ -372,11 +476,15 @@ class DemoDataSeeder extends Seeder
             }
 
             foreach ($students->take(50) as $student) {
+
                 $rand = rand(1, 10);
 
-                $status = $rand <= 8
-                    ? 'present'
-                    : ($rand == 9 ? 'absent' : 'late');
+                $status =
+                    $rand <= 8
+                        ? 'present'
+                        : ($rand == 9
+                            ? 'absent'
+                            : 'late');
 
                 Attendance::firstOrCreate(
                     [
@@ -393,26 +501,35 @@ class DemoDataSeeder extends Seeder
             }
         }
 
-        // ==================== EXAMS ====================
-        $exams = [
+        /*
+        |--------------------------------------------------------------------------
+        | Exams
+        |--------------------------------------------------------------------------
+        */
+
+        $examData = [
+
             [
                 'name' => 'First Term Assessment',
                 'start_date' => '2026-04-13',
                 'end_date' => '2026-04-17',
                 'status' => 'completed',
             ],
+
             [
                 'name' => 'Mid Year Assessment',
                 'start_date' => '2026-06-15',
                 'end_date' => '2026-06-19',
                 'status' => 'completed',
             ],
+
             [
                 'name' => 'Term Three Assessment',
                 'start_date' => '2026-09-28',
                 'end_date' => '2026-10-02',
                 'status' => 'upcoming',
             ],
+
             [
                 'name' => 'End of Year Assessment',
                 'start_date' => '2026-11-23',
@@ -421,62 +538,132 @@ class DemoDataSeeder extends Seeder
             ],
         ];
 
-        foreach ($exams as $exam) {
+        foreach ($examData as $exam) {
+
             Exam::firstOrCreate(
-                ['name' => $exam['name']],
+                [
+                    'name' => $exam['name'],
+                ],
                 array_merge(
                     $exam,
-                    ['academic_year_id' => $year->id]
+                    [
+                        'academic_year_id' => $year->id,
+                    ]
                 )
             );
         }
 
-        // ==================== MARKS ====================
-        $exam = Exam::where('status', 'completed')->first();
+        /*
+        |--------------------------------------------------------------------------
+        | Marks
+        |--------------------------------------------------------------------------
+        |
+        | IMPORTANT:
+        | Grade is calculated from marks_obtained.
+        | It is NOT assigned randomly.
+        |
+        */
 
-        if ($exam) {
+        $completedExam = Exam::where(
+            'status',
+            'completed'
+        )->first();
+
+        if ($completedExam) {
+
             $subjects = Subject::take(5)->get();
 
             foreach ($students->take(30) as $student) {
+
                 foreach ($subjects as $subject) {
+
+                    $marksObtained = rand(
+                        40,
+                        $subject->full_marks
+                    );
+
+                    $percentage =
+                        $subject->full_marks > 0
+                            ? (
+                                $marksObtained /
+                                $subject->full_marks
+                            ) * 100
+                            : 0;
+
+                    $grade =
+                        $percentage >= 90
+                            ? 'A+'
+                            : (
+                                $percentage >= 80
+                                    ? 'A'
+                                    : (
+                                        $percentage >= 70
+                                            ? 'B'
+                                            : (
+                                                $percentage >= 60
+                                                    ? 'C'
+                                                    : (
+                                                        $percentage >= 50
+                                                            ? 'D'
+                                                            : (
+                                                                $percentage >= 33
+                                                                    ? 'E'
+                                                                    : 'F'
+                                                            )
+                                                    )
+                                            )
+                                    )
+                            );
+
                     Mark::firstOrCreate(
                         [
                             'student_id' => $student->id,
-                            'exam_id' => $exam->id,
+                            'exam_id' => $completedExam->id,
                             'subject_id' => $subject->id,
                         ],
                         [
-                            'marks_obtained' => rand(40, 98),
+                            'marks_obtained' => $marksObtained,
                             'full_marks' => $subject->full_marks,
-                            'grade' => ['A+', 'A', 'B', 'C', 'D'][rand(0, 4)],
+                            'grade' => $grade,
+                            'remarks' => null,
                         ]
                     );
                 }
             }
         }
 
-        // ==================== FEE TYPES ====================
+        /*
+        |--------------------------------------------------------------------------
+        | Fee Types
+        |--------------------------------------------------------------------------
+        */
+
         $feeTypes = [
+
             [
                 'name' => 'Tuition Fee',
                 'amount' => 3500,
                 'frequency' => 'monthly',
             ],
+
             [
                 'name' => 'Assessment Fee',
                 'amount' => 1500,
                 'frequency' => 'yearly',
             ],
+
             [
                 'name' => 'Library Fee',
                 'amount' => 500,
                 'frequency' => 'yearly',
             ],
+
             [
                 'name' => 'Sports Fee',
                 'amount' => 300,
                 'frequency' => 'monthly',
             ],
+
             [
                 'name' => 'Transport Fee',
                 'amount' => 2000,
@@ -484,17 +671,29 @@ class DemoDataSeeder extends Seeder
             ],
         ];
 
-        foreach ($feeTypes as $ft) {
+        foreach ($feeTypes as $feeType) {
+
             FeeType::firstOrCreate(
-                ['name' => $ft['name']],
-                $ft
+                [
+                    'name' => $feeType['name'],
+                ],
+                $feeType
             );
         }
 
-        // ==================== FEES ====================
-        $tuitionFee = FeeType::where('name', 'Tuition Fee')->first();
+        /*
+        |--------------------------------------------------------------------------
+        | Fees
+        |--------------------------------------------------------------------------
+        */
+
+        $tuitionFee = FeeType::where(
+            'name',
+            'Tuition Fee'
+        )->first();
 
         if ($tuitionFee) {
+
             $months = [
                 'January',
                 'February',
@@ -505,10 +704,36 @@ class DemoDataSeeder extends Seeder
             ];
 
             foreach ($students->take(40) as $student) {
-                foreach ($months as $month) {
+
+                foreach ($months as $monthIndex => $month) {
+
                     $isPaid = rand(0, 3) > 0;
 
-                    $monthNumber = array_search($month, $months) + 1;
+                    $monthNumber = $monthIndex + 1;
+
+                    $dueDate =
+                        '2026-' .
+                        str_pad(
+                            $monthNumber,
+                            2,
+                            '0',
+                            STR_PAD_LEFT
+                        ) .
+                        '-10';
+
+                    $paidDate =
+                        $isPaid
+                            ? (
+                                '2026-' .
+                                str_pad(
+                                    $monthNumber,
+                                    2,
+                                    '0',
+                                    STR_PAD_LEFT
+                                ) .
+                                '-08'
+                            )
+                            : null;
 
                     Fee::firstOrCreate(
                         [
@@ -521,85 +746,107 @@ class DemoDataSeeder extends Seeder
                             'discount' => 0,
                             'fine' => 0,
                             'paid_amount' => $isPaid ? 3500 : 0,
-                            'status' => $isPaid ? 'paid' : 'pending',
-                            'due_date' => '2026-' .
-                                str_pad($monthNumber, 2, '0', STR_PAD_LEFT) .
-                                '-10',
-                            'paid_date' => $isPaid
-                                ? '2026-' .
-                                  str_pad($monthNumber, 2, '0', STR_PAD_LEFT) .
-                                  '-08'
-                                : null,
-                            'receipt_number' => 'RCP-' . rand(10000, 99999),
+                            'status' => $isPaid
+                                ? 'paid'
+                                : 'pending',
+                            'due_date' => $dueDate,
+                            'paid_date' => $paidDate,
+                            'receipt_number' =>
+                                'RCP-' .
+                                rand(10000, 99999),
                         ]
                     );
                 }
             }
         }
 
-        // ==================== BOOK CATEGORIES ====================
-        $bookCats = [
-            ['name' => 'Science & Technology'],
-            ['name' => 'Mathematics'],
-            ['name' => 'Literature & Fiction'],
-            ['name' => 'History & Geography'],
-            ['name' => 'Religion & Ethics'],
-            ['name' => 'Reference Books'],
+        /*
+        |--------------------------------------------------------------------------
+        | Book Categories
+        |--------------------------------------------------------------------------
+        */
+
+        $bookCategories = [
+
+            'Science & Technology',
+            'Mathematics',
+            'Literature & Fiction',
+            'History & Geography',
+            'Religion & Ethics',
+            'Reference Books',
         ];
 
-        foreach ($bookCats as $cat) {
+        foreach ($bookCategories as $categoryName) {
+
             BookCategory::firstOrCreate(
-                ['name' => $cat['name']]
+                [
+                    'name' => $categoryName,
+                ]
             );
         }
 
-        // ==================== BOOKS ====================
+        /*
+        |--------------------------------------------------------------------------
+        | Books
+        |--------------------------------------------------------------------------
+        */
+
         $bookData = [
+
             [
                 'title' => 'Mathematics for Junior Secondary',
                 'author' => 'Kenyan Curriculum Authors',
                 'isbn' => '978-0001',
             ],
+
             [
                 'title' => 'Integrated Science',
                 'author' => 'Kenyan Curriculum Authors',
                 'isbn' => '978-0002',
             ],
+
             [
                 'title' => 'English Grammar and Communication',
                 'author' => 'Education Publishers',
                 'isbn' => '978-0003',
             ],
+
             [
                 'title' => 'Social Studies and Citizenship',
                 'author' => 'Kenyan Curriculum Authors',
                 'isbn' => '978-0004',
             ],
+
             [
                 'title' => 'Kiswahili Language and Literature',
                 'author' => 'Kenyan Curriculum Authors',
                 'isbn' => '978-0005',
             ],
+
             [
                 'title' => 'Agriculture and Environmental Studies',
                 'author' => 'Kenyan Curriculum Authors',
                 'isbn' => '978-0006',
             ],
+
             [
                 'title' => 'Computer Studies',
                 'author' => 'ICT Education Publishers',
                 'isbn' => '978-0007',
             ],
+
             [
                 'title' => 'Creative Arts and Design',
                 'author' => 'Education Publishers',
                 'isbn' => '978-0008',
             ],
+
             [
                 'title' => 'Biology for Young Learners',
                 'author' => 'Science Education Publishers',
                 'isbn' => '978-0009',
             ],
+
             [
                 'title' => 'Business Studies for Schools',
                 'author' => 'Kenyan Curriculum Authors',
@@ -607,59 +854,92 @@ class DemoDataSeeder extends Seeder
             ],
         ];
 
-        $cat = BookCategory::first();
+        $bookCategory = BookCategory::first();
 
-        if ($cat) {
-            foreach ($bookData as $book) {
+        if ($bookCategory) {
+
+            foreach ($bookData as $bookDataItem) {
+
                 Book::firstOrCreate(
-                    ['isbn' => $book['isbn']],
+                    [
+                        'isbn' => $bookDataItem['isbn'],
+                    ],
                     array_merge(
-                        $book,
+                        $bookDataItem,
                         [
-                            'category_id' => $cat->id,
-                            'publisher' => 'Kenyan Education Publishers',
-                            'total_copies' => rand(5, 20),
-                            'available_copies' => rand(3, 10),
-                            'price' => rand(200, 800),
-                            'rack_number' => 'R-' . rand(1, 10),
+                            'category_id' =>
+                                $bookCategory->id,
+
+                            'publisher' =>
+                                'Kenyan Education Publishers',
+
+                            'total_copies' =>
+                                rand(5, 20),
+
+                            'available_copies' =>
+                                rand(3, 10),
+
+                            'price' =>
+                                rand(200, 800),
+
+                            'rack_number' =>
+                                'R-' . rand(1, 10),
                         ]
                     )
                 );
             }
         }
 
-        // ==================== NOTICES ====================
+        /*
+        |--------------------------------------------------------------------------
+        | Notices
+        |--------------------------------------------------------------------------
+        */
+
         $notices = [
+
             [
                 'title' => 'School Sports Day',
-                'content' => 'The school will hold its annual sports day. Learners and parents are encouraged to support the school teams.',
+                'content' =>
+                    'The school will hold its annual sports day. Learners and parents are encouraged to support the school teams.',
                 'audience' => 'all',
             ],
+
             [
                 'title' => 'Assessment Timetable Released',
-                'content' => 'The upcoming assessment timetable has been released. Learners should check the notice board for details.',
+                'content' =>
+                    'The upcoming assessment timetable has been released. Learners should check the notice board for details.',
                 'audience' => 'students',
             ],
+
             [
                 'title' => 'Public Holiday Notice',
-                'content' => 'The school will remain closed on the announced public holiday and resume classes on the next scheduled school day.',
+                'content' =>
+                    'The school will remain closed on the announced public holiday and resume classes on the next scheduled school day.',
                 'audience' => 'all',
             ],
+
             [
                 'title' => 'Parent Teacher Meeting',
-                'content' => 'Parents and guardians are invited to attend the scheduled parent teacher meeting.',
+                'content' =>
+                    'Parents and guardians are invited to attend the scheduled parent teacher meeting.',
                 'audience' => 'parents',
             ],
+
             [
                 'title' => 'Progress Reports',
-                'content' => 'Learner progress reports will be made available through the school administration office and parent portal.',
+                'content' =>
+                    'Learner progress reports will be made available through the school administration office and parent portal.',
                 'audience' => 'students',
             ],
         ];
 
         foreach ($notices as $notice) {
+
             Notice::firstOrCreate(
-                ['title' => $notice['title']],
+                [
+                    'title' => $notice['title'],
+                ],
                 array_merge(
                     $notice,
                     [
@@ -671,32 +951,42 @@ class DemoDataSeeder extends Seeder
             );
         }
 
-        // ==================== EVENTS ====================
+        /*
+        |--------------------------------------------------------------------------
+        | Events
+        |--------------------------------------------------------------------------
+        */
+
         $events = [
+
             [
                 'title' => 'Annual Sports Day',
                 'start_date' => '2026-09-12',
                 'end_date' => '2026-09-12',
                 'location' => 'School Sports Ground',
             ],
+
             [
                 'title' => 'Science and Innovation Exhibition',
                 'start_date' => '2026-09-25',
                 'end_date' => '2026-09-26',
                 'location' => 'School Hall',
             ],
+
             [
                 'title' => 'Cultural Day',
                 'start_date' => '2026-10-09',
                 'end_date' => '2026-10-09',
                 'location' => 'School Grounds',
             ],
+
             [
                 'title' => 'Parent Teacher Meeting',
                 'start_date' => '2026-10-17',
                 'end_date' => '2026-10-17',
                 'location' => 'Classrooms',
             ],
+
             [
                 'title' => 'Annual Prize Giving Day',
                 'start_date' => '2026-11-28',
@@ -706,8 +996,11 @@ class DemoDataSeeder extends Seeder
         ];
 
         foreach ($events as $event) {
+
             Event::firstOrCreate(
-                ['title' => $event['title']],
+                [
+                    'title' => $event['title'],
+                ],
                 array_merge(
                     $event,
                     [
@@ -716,35 +1009,56 @@ class DemoDataSeeder extends Seeder
                             $event['title'] .
                             ' at ' .
                             $event['location'],
+
                         'status' => 'active',
                     ]
                 )
             );
         }
 
-        // ==================== NEWS ====================
+        /*
+        |--------------------------------------------------------------------------
+        | News
+        |--------------------------------------------------------------------------
+        */
+
         $newsData = [
+
             [
-                'title' => 'Learners Excel in Science and Innovation',
-                'content' => 'Our learners demonstrated creativity and problem-solving skills during the school science and innovation activities.',
+                'title' =>
+                    'Learners Excel in Science and Innovation',
+
+                'content' =>
+                    'Our learners demonstrated creativity and problem-solving skills during the school science and innovation activities.',
             ],
+
             [
-                'title' => 'School Expands Digital Learning Resources',
-                'content' => 'The school has continued to strengthen digital learning resources to support technology-enabled education.',
+                'title' =>
+                    'School Expands Digital Learning Resources',
+
+                'content' =>
+                    'The school has continued to strengthen digital learning resources to support technology-enabled education.',
             ],
+
             [
-                'title' => 'Learners Show Strong Progress',
-                'content' => 'Learners have demonstrated encouraging progress across academic, practical, creative, and co-curricular activities.',
+                'title' =>
+                    'Learners Show Strong Progress',
+
+                'content' =>
+                    'Learners have demonstrated encouraging progress across academic, practical, creative, and co-curricular activities.',
             ],
         ];
 
         foreach ($newsData as $news) {
+
             News::firstOrCreate(
-                ['title' => $news['title']],
+                [
+                    'title' => $news['title'],
+                ],
                 array_merge(
                     $news,
                     [
-                        'slug' => \Illuminate\Support\Str::slug($news['title']),
+                        'slug' => Str::slug($news['title']),
                         'author_id' => 1,
                         'status' => 'published',
                         'published_at' => now(),
@@ -753,44 +1067,90 @@ class DemoDataSeeder extends Seeder
             );
         }
 
-        // ==================== TESTIMONIALS ====================
+        /*
+        |--------------------------------------------------------------------------
+        | Testimonials
+        |--------------------------------------------------------------------------
+        */
+
         $testimonials = [
+
             [
                 'name' => 'Mr. Peter Kiptoo',
                 'role' => 'Parent of a learner',
-                'message' => 'The school provides a supportive learning environment and the teachers are committed to helping learners improve.',
+                'message' =>
+                    'The school provides a supportive learning environment and the teachers are committed to helping learners improve.',
             ],
+
             [
                 'name' => 'Mrs. Jane Wanjiku',
                 'role' => 'Parent of a learner',
-                'message' => 'We appreciate the communication between the school and parents and the attention given to learner development.',
+                'message' =>
+                    'We appreciate the communication between the school and parents and the attention given to learner development.',
             ],
+
             [
                 'name' => 'Mr. Samuel Ochieng',
                 'role' => 'Parent of a learner',
-                'message' => 'The learning environment is welcoming and the school encourages learners to develop both academic and practical skills.',
+                'message' =>
+                    'The learning environment is welcoming and the school encourages learners to develop both academic and practical skills.',
             ],
+
             [
                 'name' => 'Mrs. Grace Chebet',
                 'role' => 'Parent of a learner',
-                'message' => 'The teachers are supportive and the school encourages learners to participate in different activities.',
+                'message' =>
+                    'The teachers are supportive and the school encourages learners to participate in different activities.',
             ],
         ];
 
-        foreach ($testimonials as $t) {
+        foreach ($testimonials as $testimonial) {
+
             Testimonial::firstOrCreate(
-                ['name' => $t['name']],
+                [
+                    'name' => $testimonial['name'],
+                ],
                 array_merge(
-                    $t,
-                    ['status' => 'active']
+                    $testimonial,
+                    [
+                        'status' => 'active',
+                    ]
                 )
             );
         }
 
-        echo "Kenyan CBC demo data seeded successfully!\n";
-        echo "Students: " . Student::count() . "\n";
-        echo "Teachers: " . Teacher::count() . "\n";
-        echo "Books: " . Book::count() . "\n";
-        echo "Fees: " . Fee::count() . "\n";
+        /*
+        |--------------------------------------------------------------------------
+        | Completion Message
+        |--------------------------------------------------------------------------
+        */
+
+        $this->command?->info(
+            'Kenyan CBC demo data seeded successfully!'
+        );
+
+        $this->command?->info(
+            'Students: ' . Student::count()
+        );
+
+        $this->command?->info(
+            'Teachers: ' . Teacher::count()
+        );
+
+        $this->command?->info(
+            'Books: ' . Book::count()
+        );
+
+        $this->command?->info(
+            'Fees: ' . Fee::count()
+        );
+
+        $this->command?->info(
+            'Subjects: ' . Subject::count()
+        );
+
+        $this->command?->info(
+            'Classes: ' . SchoolClass::count()
+        );
     }
 }
